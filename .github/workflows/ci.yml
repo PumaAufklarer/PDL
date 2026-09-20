@@ -1,0 +1,60 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    name: check (py${{ matrix.python-version }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.10", "3.11", "3.12"]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: 安装 uv
+        uses: astral-sh/setup-uv@v10
+        with:
+          enable-cache: true
+
+      - name: 同步依赖
+        run: uv sync --all-groups --python ${{ matrix.python-version }}
+
+      - name: 格式检查
+        run: uv run ruff format --check .
+
+      - name: lint
+        run: uv run ruff check .
+
+      - name: 类型检查
+        run: uv run mypy
+
+      - name: 测试与覆盖率
+        run: >
+          uv run pytest
+          --cov=pdl
+          --cov-report=term-missing
+          --cov-fail-under=90
+
+  commit-message:
+    name: commit message
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # 需要完整历史才能 diff 出这个 PR 上的所有 commit。
+          fetch-depth: 0
+
+      - name: 校验 PR 上的每一条 commit message
+        run: |
+          git log --format=%s "origin/${{ github.base_ref }}..HEAD" \
+            | python3 scripts/check_commit_msg.py --stdin

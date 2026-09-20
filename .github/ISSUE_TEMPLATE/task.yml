@@ -1,0 +1,67 @@
+name: 任务
+description: 一个可独立交付的学习/实现任务。导师每周一开一个。
+title: "stage<N>: "
+labels: ["task"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        标题格式：`stage<N>: <动词开头的英文小写描述>`，例如
+        `stage2: implement add with broadcasting and its backward pass`。
+        正文五段都要填，尤其是「不要做」——它和「验收标准」一样重要。
+
+  - type: textarea
+    id: goal
+    attributes:
+      label: 目标
+      description: 一句话，可验收。
+      placeholder: 让 pdl.Tensor 支持加法与广播，并让梯度能正确回传。
+    validations:
+      required: true
+
+  - type: textarea
+    id: context
+    attributes:
+      label: 背景
+      description: 为什么现在做这个？和上一个 Stage 的什么内容衔接？
+    validations:
+      required: true
+
+  - type: textarea
+    id: dod
+    attributes:
+      label: 验收标准 (DoD)
+      description: 3–5 条，尽量写成可执行的判断（跑哪个命令、看哪个数字）。
+      placeholder: |
+        - [ ] `pytest tests/tensor/test_add.py` 全绿
+        - [ ] 随机输入下与 numpy 的 add 结果误差 < 1e-12
+        - [ ] 形状不兼容时抛出 ValueError 并说明原因
+    validations:
+      required: true
+
+  - type: textarea
+    id: hints
+    attributes:
+      label: 提示
+      description: 一两条思路，不要给答案。
+    validations:
+      required: false
+
+  - type: textarea
+    id: out_of_scope
+    attributes:
+      label: 不要做
+      description: 明确划出范围外的东西，防止跑偏和过度设计。
+      placeholder: |
+        - 不要支持原地修改（in-place）
+        - 不要为了性能做缓存
+    validations:
+      required: true
+
+  - type: textarea
+    id: refs
+    attributes:
+      label: 参考
+      description: D2L 章节、handbook 章节、相关 Issue/PR。
+    validations:
+      required: false

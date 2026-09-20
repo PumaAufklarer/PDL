@@ -1,0 +1,37 @@
+name: 缺陷
+description: 代码行为和预期不一致。写之前先想清楚"预期"是从哪来的。
+title: "fix: "
+labels: ["bug"]
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: 现象
+      description: 你观察到什么？
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: 预期
+      description: 你认为它应该是什么？依据是什么（文档、数学推导、numpy 的对照结果）？
+    validations:
+      required: true
+
+  - type: textarea
+    id: repro
+    attributes:
+      label: 最小复现
+      description: 能直接粘贴运行的最小代码片段。不要贴整个文件。
+      render: python
+    validations:
+      required: true
+
+  - type: textarea
+    id: env
+    attributes:
+      label: 环境
+      description: 运行 `uv run python -c "import pdl,sys;print(pdl.__version__, sys.version)"` 的结果。
+    validations:
+      required: false

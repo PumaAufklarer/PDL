@@ -1,0 +1,30 @@
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v6.0.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: mixed-line-ending
+      - id: check-yaml
+      - id: check-toml
+      - id: check-merge-conflict
+      - id: check-added-large-files
+        # 与协作规范一致：超过 1 MB 的文件必须先确认如何处理。
+        args: ["--maxkb=1024"]
+
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.16.8
+    hooks:
+      - id: ruff
+        args: ["--fix"]
+      - id: ruff-format
+
+  # 本仓库自己的 commit message 规范。本地钩子和 CI 跑的是同一个脚本，
+  # 所以本地过了 CI 就不会因为格式问题变红。
+  - repo: local
+    hooks:
+      - id: commit-message
+        name: commit message 格式
+        entry: python3 scripts/check_commit_msg.py --file
+        language: system
+        stages: [commit-msg]

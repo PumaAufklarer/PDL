@@ -1,0 +1,7 @@
+# CODEOWNERS
+#
+# 目的：学生提 PR 后，GitHub 自动把导师加为 reviewer，不用口头提醒。
+# TODO(导师): 把下面的占位符换成你的 GitHub 用户名（例如 @octocat）。
+# 最后一条匹配生效，所以默认规则写在最前面、特例写在后面。
+
+*       @TODO-mentor-handle
