@@ -6,8 +6,12 @@ __pycache__/
 venv/
 
 # 构建产物
-dist/
-build/
+# 注意：这几条必须加前导 / 锚定到仓库根。
+# 不锚定的 `data/` 会匹配任意层级的同名目录，把 `src/pdl/data/` 这类源码目录
+# 一起忽略掉——本地因为文件已在磁盘上不会报错，一旦 clone 就 ModuleNotFoundError。
+/data/
+/dist/
+/build/
 
 # 工具缓存
 .pytest_cache/
@@ -17,10 +21,7 @@ build/
 .coverage.*
 htmlcov/
 
-
-
-# 数据集缓存（Stage 4 起下载的数据放这里）
-data/
+# 数据集缓存（下载的数据放仓库根的 data/，不会影响 src/pdl/data/）
 *.npz
 *.npy
 
