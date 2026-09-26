@@ -73,4 +73,3 @@ scripts/                  工具脚本（commit message 校验等）
 骨架阶段：包结构与工具链已就绪，`src/pdl/` 下所有子包都是空的。
 下一步是 `docs/roadmap.md` 里的 Stage 0 与 Stage 1。
 
-<!-- TODO(first-pr): 把这一行整行删掉就行，别改别的地方。任务说明见 docs/roadmap.md 的 Stage 0。 -->
